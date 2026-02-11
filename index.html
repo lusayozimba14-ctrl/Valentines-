@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise for Taonga</title>
+    <style>
+        :root {
+            --primary-red: #ff002b;
+            --deep-maroon: #590004;
+            --glass: rgba(255, 255, 255, 0.92);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #800000, #2b0000);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Falling Roses and Hearts */
+        .falling {
+            position: absolute;
+            top: -50px;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        #main-card {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.5);
+            width: 85%;
+            max-width: 450px;
+            text-align: center;
+            z-index: 10;
+            border: 2px solid #ff4d6d;
+            transition: all 0.8s ease;
+        }
+
+        .progress {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h1 { color: var(--deep-maroon); margin: 0 0 15px 0; font-size: 1.6em; }
+        h2 { color: var(--primary-red); }
+        p { font-size: 1.1em; color: #333; line-height: 1.5; }
+
+        button {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #ff4d6d; transform: scale(1.03); }
+
+        .hidden { display: none !important; }
+
+        /* Heart Frame Styling */
+        .video-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .heart-frame {
+            width: 160px;
+            height: 160px;
+            background: #000;
+            /* This creates the heart shape */
+            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+            transform: scale(8); /* Scales the SVG path to fit container */
+            transform-origin: center;
+        }
+
+        /* Standard CSS heart clip-path for easier control */
+        .heart-clip {
+            width: 180px;
+            height: 180px;
+            clip-path: polygon(50% 15%, 80% 0%, 100% 20%, 100% 50%, 50% 100%, 0% 50%, 0% 20%, 20% 0%);
+            background: var(--primary-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        video {
+            width: 105%;
+            height: 105%;
+            object-fit: cover;
+        }
+
+        .fade-in { animation: fadeIn 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="main-card">
+        <div id="start">
+            <h1>Hey Taonga... 💖</h1>
+            <p>I’ve locked my heart in this little game. Only you have the key to open it.</p>
+            <button onclick="nextStep('start', 'q1')">Unlock My Heart 🔓</button>
+        </div>
+
+        <div id="quiz-box" class="hidden">
+            <div id="progress-text" class="progress">Question 1 of 9</div>
+            
+            <div id="q1" class="question fade-in">
+                <p>What is my favorite memory of us?</p>
+                <button onclick="check(1, 'B')">Our first date 🌹</button>
+                <button onclick="check(1, 'B')">First time at church together ⛪</button>
+            </div>
+            <div id="q2" class="question hidden fade-in"><p>Which moment made me most anxious?</p><button onclick="check(2, 'A')">Our first kiss 😳</button><button onclick="check(2, 'B')">Seeing you after long time 😅</button></div>
+            <div id="q3" class="question hidden fade-in"><p>Which personal physical part of yours do I love the most?</p><button onclick="check(3, 'C')">Lips 😘</button><button onclick="check(3, 'C')">Ass 🍑</button><button onclick="check(3, 'C')">All of you! 😁</button></div>
+            <div id="q4" class="question hidden fade-in"><p>Which moment do I remember vividly?</p><button onclick="check(4, 'A')">Our first official encounter 💓</button><button onclick="check(4, 'B')">Our first encounter behind walls 🔥</button></div>
+            <div id="q5" class="question hidden fade-in"><p>Which part of our story do I treasure more?</p><button onclick="check(5, 'B')">How we started 😌</button><button onclick="check(5, 'B')">How we've grown together 🌱</button></div>
+            <div id="q6" class="question hidden fade-in"><p>What is a silly thing you do that I like?</p><button onclick="check(6, 'B')">Dance in public 💃</button><button onclick="check(6, 'B')">Make silly faces 😜</button></div>
+            <div id="q7" class="question hidden fade-in"><p>What food do I secretly love that we share?</p><button onclick="check(7, 'A')">Shawarma 🌯</button><button onclick="check(7, 'B')">Pizza 🍕</button></div>
+            <div id="q8" class="question hidden fade-in"><p>Which song reminds me of our time together?</p><button onclick="check(8, 'B')">“Perfect” by Ed Sheeran 🎶</button><button onclick="check(8, 'B')">“One Love” By Fally Ipupa 🎤</button></div>
+            <div id="q9" class="question hidden fade-in"><p>If I could relive one moment with you, which would it be?</p><button onclick="check(9, 'B')">You in my arms from 3-5am</button><button onclick="check(9, 'B')">First hug after Uni first term</button></div>
+        </div>
+
+        <div id="final" class="hidden fade-in">
+            <h2>Taonga Phiri... ❤️</h2>
+            <p>You got every answer right because you are my soulmate.</p>
+            <h1>Will you be my Valentine’s date?</h1>
+            <button onclick="celebrate()">YES, FOREVER! 💖</button>
+        </div>
+
+        <div id="video-reveal" class="hidden fade-in">
+            <h1 style="font-size: 2.2em; margin-bottom: 5px;">It's a Date! 🌹</h1>
+            <p style="margin-bottom: 20px;">I can't wait to make more memories with you.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <div class="heart-clip" style="width: 180px; height: 180px; clip-path: url(#heartPath); background: #000; overflow: hidden;">
+                    <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                        <source src="video1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                
+                <div class="heart-clip" style="width: 180px; height: 180px; clip-path: url(#heartPath); background: #000; overflow: hidden;">
+                    <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                        <source src="video2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <svg width="0" height="0">
+                <defs>
+                    <clipPath id="heartPath" clipPathUnits="objectBoundingBox">
+                        <path d="M0.5,0.888 C0.4,0.78,0,0.56,0,0.32 C0,0.13,0.18,0,0.4,0 C0.52,0,0.64,0.06,0.7,0.15 C0.76,0.06,0.88,0,1,0 C1.22,0,1.4,0.13,1.4,0.32 C1.4,0.56,1,0.78,0.9,0.888 L0.7,1.1 L0.5,0.888 Z" transform="scale(0.7, 0.9) translate(0.2, 0)"></path>
+                    </clipPath>
+                </defs>
+            </svg>
+
+            <p style="margin-top: 25px; font-weight: bold; color: #ff002b; font-size: 1.3em; animation: pulse 1.5s infinite;">I love you, Taonga! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        let current = 1;
+        const answers = { 1:'B', 2:'A', 3:'C', 4:'A', 5:'B', 6:'B', 7:'A', 8:'B', 9:'B' };
+
+        function nextStep(hideId, showId) {
+            document.getElementById(hideId).classList.add('hidden');
+            document.getElementById(showId).classList.remove('hidden');
+            if(showId === 'q1') {
+                document.getElementById('quiz-box').classList.remove('hidden');
+                startRain();
+            }
+        }
+
+        function check(num, choice) {
+            if (choice === answers[num]) {
+                if (current < 9) {
+                    document.getElementById('q' + current).classList.add('hidden');
+                    current++;
+                    document.getElementById('q' + current).classList.remove('hidden');
+                    document.getElementById('progress-text').innerText = "Question " + current + " of 9";
+                } else {
+                    document.getElementById('quiz-box').classList.add('hidden');
+                    document.getElementById('final').classList.remove('hidden');
+                }
+            } else {
+                alert("Try again, my love! ❤️");
+            }
+        }
+
+        function startRain() {
+            const icons = ['🌹', '❤️', '🌹', '💖'];
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.className = 'falling';
+                div.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                div.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                document.body.appendChild(div);
+                setTimeout(() => div.remove(), 6000);
+            }, 300);
+        }
+
+        function celebrate() {
+            document.getElementById('final').classList.add('hidden');
+            document.getElementById('video-reveal').classList.remove('hidden');
+            document.getElementById('main-card').style.maxWidth = "600px"; // Expand for videos
+            for(let i=0; i<50; i++) { startRain(); }
+        }
+    </script>
+</body>
+</html>
